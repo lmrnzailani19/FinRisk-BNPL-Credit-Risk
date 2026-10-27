@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Secrets
+.streamlit/secrets.toml
+.env
+
+# Editor and notebook files
+.vscode/
+.ipynb_checkpoints/
+
+# Temporary and system files
+.DS_Store
+Thumbs.db
+
+# Backup folders
+*_empty_backup/
+
+# Dataset files — keep local until redistribution rights are confirmed
+data/
+
+# Backup folders
+*_empty_backup/
