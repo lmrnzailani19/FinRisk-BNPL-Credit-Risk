@@ -84,17 +84,29 @@ The prediction target is `default_flag`, which represents whether a record is la
 
 ## Model Evaluation
 
-The current Logistic Regression model achieved the following results on the held-out test set at a classification threshold of 0.40:
+The Logistic Regression model was evaluated on a held-out test set using a classification threshold of 0.40.
 
-- Accuracy: approximately 63.4%
-- Default-class precision: approximately 53%
-- Default-class recall: approximately 66%
-- Default-class F1-score: approximately 0.59
-- ROC-AUC: approximately 0.695
+| Metric | Result |
+|---|---:|
+| Accuracy | 63.4% |
+| Default-class precision | 53% |
+| Default-class recall | 66% |
+| Default-class F1-score | 0.59 |
+| ROC-AUC | 0.695 |
+| Dummy baseline accuracy | 61.0% |
 
-The dummy baseline achieved approximately 61.0% accuracy.
+### Key Findings
 
-These results are preliminary and do not establish that the model is suitable for real-world credit decisions. The dataset's target-generation process and probability calibration require further validation.
+- **Default detection:** The model achieved approximately 66% recall for the default class, indicating that it identified around two-thirds of actual defaults in the test set.
+- **Prediction accuracy:** Default-class precision was approximately 53%, meaning that around 53% of the customers predicted as defaults were actual defaults in the test set.
+- **Model discrimination:** The ROC-AUC score of 0.695 indicates some ability to distinguish between customers who defaulted and those who did not.
+- **Baseline comparison:** The model's accuracy exceeded the dummy baseline by approximately 2.4 percentage points. Further evaluation is needed to establish whether this improvement is meaningful.
+
+### Limitations
+
+These results are preliminary and do not establish that the model is suitable for real-world credit decisions. The dataset's target-generation process and probability calibration require further validation. Additional testing, including calibration analysis, threshold selection, and evaluation on independent data, would be necessary before considering any real-world application.
+
+**Disclaimer:** FinRisk is an educational prototype for exploring machine learning in Buy Now, Pay Later (BNPL) credit risk assessment. It is not intended for actual lending or automated credit decisions.
 
 ## Limitations and Responsible Use
 
