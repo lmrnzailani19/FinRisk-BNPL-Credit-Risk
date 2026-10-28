@@ -8,6 +8,10 @@ FinRisk analyzes customer and transaction-related features to estimate the proba
 
 **Purpose:** To demonstrate data analysis, machine learning model development, and risk visualization in a fintech context.
 
+## Dashboard Preview
+
+The FinRisk dashboard provides an interactive overview of BNPL customer data, credit-risk indicators, and model-based default probability estimates.
+
 ## Features
 
 - **Exploratory Data Analysis:** Examine customer data, distributions, and default patterns.
