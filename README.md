@@ -17,6 +17,17 @@ The FinRisk dashboard provides an interactive overview of BNPL customer data, cr
 - **Exploratory Data Analysis:** Examine customer data, distributions, and default patterns.
 - **Machine Learning:** Train a Logistic Regression model to estimate default probability.
 - **Model Evaluation:** Evaluate classification performance using precision, recall, F1-score, accuracy, and ROC-AUC.
+
+### ROC Curve
+
+The Receiver Operating Characteristic (ROC) curve evaluates how well the FinRisk Logistic Regression model distinguishes between customers who default and customers who repay successfully.
+
+![FinRisk ROC Curve](screenshots/roc_curve.png)
+
+The model achieved a test-set ROC-AUC score of approximately **0.695**, indicating moderate ability to distinguish between the two classes. A score of 0.5 represents random ranking, while 1.0 represents perfect ranking.
+
+These results are preliminary and should not be interpreted as proof that the model is ready for real-world lending decisions. Further validation of the dataset, target-generation process, and probability calibration is required.
+
 - **Interactive Dashboard:** Explore the dataset and submit sample customer details for a model estimate.
 - **Data Visualization:** Display charts and summary statistics through Streamlit.
 
