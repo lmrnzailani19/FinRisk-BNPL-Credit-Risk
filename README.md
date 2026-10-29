@@ -31,6 +31,20 @@ These results are preliminary and should not be interpreted as proof that the mo
 - **Interactive Dashboard:** Explore the dataset and submit sample customer details for a model estimate.
 - **Data Visualization:** Display charts and summary statistics through Streamlit.
 
+## Model Explainability
+
+FinRisk uses Logistic Regression to estimate the probability of BNPL default. The model's coefficients help explain how transformed customer features influence its predictions.
+
+![FinRisk feature coefficient chart](screenshots/feature_coefficients.png)
+
+### Key Observations
+
+- **Credit score:** The model assigns a negative coefficient, associating higher standardized credit scores with lower predicted default odds.
+- **Monthly income:** The model assigns a positive coefficient. This unexpected relationship deserves further investigation before drawing real-world conclusions.
+- **Purchase amount:** The model assigns a positive coefficient, associating higher standardized purchase amounts with higher predicted default odds.
+
+These coefficients describe associations learned from the dataset, not causal relationships. The findings are preliminary and should not be used as real-world lending rules without further validation.
+
 ## Technology Stack
 
 - Python
