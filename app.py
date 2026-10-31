@@ -1,6 +1,6 @@
 
 from pathlib import Path
-
+import os
 import joblib
 import pandas as pd
 import streamlit as st
@@ -31,18 +31,32 @@ st.caption(
     "Educational portfolio prototype — not for real lending decisions."
 )
 
+
 @st.cache_data
 def load_data(path):
+    if not os.path.exists(path):
+        return None
+
     return pd.read_excel(path)
 
+
 if not DATA_PATH.exists():
-    st.error(f"Dataset not found: {DATA_PATH}")
-    st.stop()
+    st.warning(
+        "Dataset is unavailable in the online demo. "
+        "Overview and Explore Data are disabled; "
+        "Risk Assessment can still be demonstrated."
+    )
 
 df = load_data(DATA_PATH)
 @st.cache_resource
 def load_model(path):
     return joblib.load(path)
+
+if df is None:
+    st.warning(
+        "Dataset is unavailable in the online demo. "
+        "The Risk Assessment feature may still be available."
+    )
 
 if not MODEL_PATH.exists():
     st.error("Trained model not found. Run python train_model.py first.")
@@ -63,9 +77,14 @@ required_columns = [
 
 missing_columns = [col for col in required_columns if col not in df.columns]
 
-if missing_columns:
-    st.error(f"Dataset is missing columns: {missing_columns}")
-    st.stop()
+if df is not None:
+    missing_columns = [
+        col for col in required_columns if col not in df.columns
+    ]
+
+    if missing_columns:
+        st.error(f"Dataset is missing columns: {missing_columns}")
+        st.stop()
 
 # --------------------------------------------------
 # Sidebar
@@ -73,10 +92,12 @@ if missing_columns:
 
 st.sidebar.header("Dashboard Controls")
 
-view = st.sidebar.radio(
-    "Choose a view",
-    ["Overview", "Explore Data", "Risk Assessment"],
-)
+views = ["Risk Assessment"]
+
+if df is not None:
+    views = ["Overview", "Explore Data", "Risk Assessment"]
+
+view = st.sidebar.radio("Choose a view", views)
 
 st.sidebar.caption(
     "The dataset's default_flag is the recorded outcome, "
@@ -87,7 +108,7 @@ st.sidebar.caption(
 # Overview
 # --------------------------------------------------
 
-if view == "Overview":
+if view == "Overview" and df is not None:
     st.header("Portfolio Overview")
 
     total_customers = len(df)
@@ -149,7 +170,7 @@ if view == "Overview":
 # Explore Data
 # --------------------------------------------------
 
-elif view == "Explore Data":
+elif view == "Explore Data" and df is not None:
     st.header("Explore the Dataset")
 
     st.write("Inspect records and filter the dataset.")
@@ -233,16 +254,21 @@ else:
             "BNPL installments", [2, 3, 4, 6, 12]
         )
 
-        employment_options = sorted(
-            df["employment_type"].dropna().astype(str).unique()
-        )
+        employment_options = (
+    sorted(df["employment_type"].dropna().astype(str).unique())
+    if df is not None
+    else ["Salaried", "Self-Employed", "Unemployed", "Student"]
+)
+        
         employment_type = st.selectbox(
             "Employment type", employment_options
         )
 
-        category_options = sorted(
-            df["product_category"].dropna().astype(str).unique()
-        )
+        category_options = (
+    sorted(df["product_category"].dropna().astype(str).unique())
+    if df is not None
+    else ["Beauty", "Electronics", "Fashion", "Home", "Sports"]
+)
         product_category = st.selectbox(
             "Product category", category_options
         )
@@ -291,3 +317,4 @@ st.caption(
     "FinRisk is a student portfolio project. "
     "Its results must not be used to approve or reject real customers."
 )
+
